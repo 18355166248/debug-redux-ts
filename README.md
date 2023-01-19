@@ -75,4 +75,4 @@ src/react-redux/package.json 下的 react 和 react-dom 相关的依赖和 @type
 
 然后我们这个时候再运行 npm run start 可以发现已经正常了
 
-[](./public/result.png)
+[](https://raw.githubusercontent.com/18355166248/debug-redux-ts/main/public/result.png)
