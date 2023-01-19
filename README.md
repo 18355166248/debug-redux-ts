@@ -27,7 +27,7 @@
   git clone --branch v4.2.0 git@github.com:reduxjs/redux.git
 ```
 
-### 调试
+### 2. 调试
 
 我们需要执行 cra 的 eject 命令去将打包的 webpack 配置暴露出来, 以便我们修改配置, 当然如果你想用 craco 也是可以的 最新的 craco 已经支持 cra 版本了
 
@@ -74,3 +74,5 @@
 src/react-redux/package.json 下的 react 和 react-dom 相关的依赖和 @types
 
 然后我们这个时候再运行 npm run start 可以发现已经正常了
+
+[](./public/result.png)
