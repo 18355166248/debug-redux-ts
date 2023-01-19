@@ -1,46 +1,76 @@
-# Getting Started with Create React App
+# 调试 react-redux 和 redux 源码
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+| 依赖        | 版本   |
+| ----------- | ------ |
+| react       | 18.2.0 |
+| react-redux | 18.0.5 |
+| redux       | 4.2.0  |
 
-## Available Scripts
+## 安装
 
-In the project directory, you can run:
+### 1. 初始化
 
-### `npm start`
+我们先使用 create-react-app 去下载 redux 模板的代码
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+  # JS
+  npx create-react-app my-app --template redux
+  # TS
+  npx create-react-app my-app --template redux-typescript
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+然后我们使用命令去 clone react-redux 和 redux 的代码到 src 目录下
 
-### `npm test`
+```bash
+  cd src
+  git clone --branch v18.0.5 git@github.com:reduxjs/react-redux.git
+  git clone --branch v4.2.0 git@github.com:reduxjs/redux.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 调试
 
-### `npm run build`
+我们需要执行 cra 的 eject 命令去将打包的 webpack 配置暴露出来, 以便我们修改配置, 当然如果你想用 craco 也是可以的 最新的 craco 已经支持 cra 版本了
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+执行完 eject 后 我们需要找到 webpack 代码修改一下
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> config/webpack.config.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```JS
+{
+  extensions: paths.moduleFileExtensions
+    .map((ext) => `.${ext}`)
+    .filter((ext) => useTypeScript || !ext.includes("ts")),
+  alias: {
+    // Support React Native Web
+    // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+    "react-native": "react-native-web",
+    // Allows for better profiling with ReactDevTools
+    // ...(isEnvProductionProfile && {
+    //   'react-dom$': 'react-dom/profiling',
+    //   'scheduler/tracing': 'scheduler/tracing-profiling',
+    // }),
 
-### `npm run eject`
+    // TODO start
+ +  "react-redux": path.join(paths.appSrc, "react-redux/src"),
+ +  redux: path.join(paths.appSrc, "redux/src"),
+    // TODO end
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    ...(modules.webpackAliases || {}),
+  },
+}
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+这个时候我们执行 npm run start 一定会一大堆报错, 包括 eslint 和 ts 的
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+我们需要删除一些文件
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- src/react/.eslintrc
+- src/react/test
+- src/react-redux/.eslintrc
+- src/react-redux/test
 
-## Learn More
+还要删除一些 package.json 里面的依赖
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+src/react-redux/package.json 下的 react 和 react-dom 相关的依赖和 @types
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+然后我们这个时候再运行 npm run start 可以发现已经正常了
