@@ -144,6 +144,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-is": "^17.0.3"
+    "@types/react-is": "^17.0.3",
+    "sass": "^1.58.3"
   }
 }

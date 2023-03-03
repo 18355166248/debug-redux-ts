@@ -1,0 +1,27 @@
+.counter {
+  text-align: center;
+  margin-top: 100px;
+  .num {
+    font-size: 34px;
+    font-weight: 700;
+    background-color: #ccc;
+  }
+  .btn-list {
+    display: flex;
+    justify-content: center;
+    .btn {
+      cursor: pointer;
+      height: 30px;
+      background-color: bisque;
+      margin: 10px;
+      text-align: center;
+      line-height: 30px;
+      padding: 0 10px;
+      user-select: none;
+    }
+  }
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
