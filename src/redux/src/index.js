@@ -29,7 +29,6 @@ if (
 }
 
 export {
-  createStore,
   legacy_createStore,
   combineReducers,
   bindActionCreators,

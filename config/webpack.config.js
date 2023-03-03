@@ -322,7 +322,9 @@ module.exports = function (webpackEnv) {
 
         // TODO start
         "react-redux": path.join(paths.appSrc, "react-redux/src"),
+        "redux-toolkit": path.join(paths.appSrc, "toolkit/src"),
         redux: path.join(paths.appSrc, "redux/src"),
+
         // TODO end
 
         ...(modules.webpackAliases || {}),
