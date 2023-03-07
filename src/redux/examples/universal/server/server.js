@@ -17,7 +17,7 @@ import App from '../common/containers/App'
 import { fetchCounter } from '../common/api/counter'
 
 const app = new Express()
-const port = 3000
+const port = 3002
 
 // Use this middleware to set up hot module reloading via webpack.
 const compiler = webpack(webpackConfig)

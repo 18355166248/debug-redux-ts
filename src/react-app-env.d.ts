@@ -71,12 +71,5 @@ declare module "*.module.sass" {
 }
 
 declare module "redux-toolkit" {
-  export {
-    createAsyncThunk,
-    createSlice,
-    PayloadAction,
-    configureStore,
-    ThunkAction,
-    Action,
-  };
+  export {};
 }

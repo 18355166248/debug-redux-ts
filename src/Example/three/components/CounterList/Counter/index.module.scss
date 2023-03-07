@@ -1,0 +1,41 @@
+.counter {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  justify-content: space-between;
+  .btn {
+    padding: 0 6px;
+    border-radius: 2px;
+    background-color: #ccc;
+    color: #000;
+    padding-bottom: 2px;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .left {
+    display: flex;
+    padding: 6px 0;
+    .num {
+      width: 80px;
+    }
+    .id {
+      width: 300px;
+    }
+    .loading {
+      color: yellowgreen;
+    }
+    .add {
+    }
+    .addEveryM {
+    }
+    .addAfterM {
+    }
+  }
+  .right {
+    .del {
+      background-color: red;
+      color: #fff;
+    }
+  }
+}
