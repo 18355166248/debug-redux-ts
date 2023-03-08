@@ -43,7 +43,8 @@ function createListenerCollection() {
       return listeners
     },
 
-    subscribe(callback: () => void) {
+    subscribe (callback: () => void) {
+      console.log('callback',callback)
       let isSubscribed = true
 
       let listener: Listener = (last = {

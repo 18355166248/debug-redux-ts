@@ -50,6 +50,7 @@ function Provider<A extends Action = AnyAction, S = unknown>({
       subscription.notifyNestedSubs()
     }
     return () => {
+      console.log('销毁订阅')
       subscription.tryUnsubscribe()
       subscription.onStateChange = undefined
     }
