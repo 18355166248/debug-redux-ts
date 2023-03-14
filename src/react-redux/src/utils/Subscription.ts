@@ -23,10 +23,12 @@ function createListenerCollection() {
       last = null
     },
 
-    notify() {
+    notify () {
       batch(() => {
+        debugger
         let listener = first
         while (listener) {
+          // 这个callback 就是 react-dom 的 subscribeToStore 也就是 告知react重新渲染 那也就是能拿到最新的 redux 的值了
           listener.callback()
           listener = listener.next
         }
@@ -44,7 +46,6 @@ function createListenerCollection() {
     },
 
     subscribe (callback: () => void) {
-      console.log('callback',callback)
       let isSubscribed = true
 
       let listener: Listener = (last = {
@@ -100,16 +101,17 @@ export function createSubscription(store: any, parentSub?: Subscription) {
   let unsubscribe: VoidFunc | undefined
   let listeners: ListenerCollection = nullListeners
 
-  function addNestedSub(listener: () => void) {
+  function addNestedSub (listener: () => void) {
     trySubscribe()
     return listeners.subscribe(listener)
   }
 
-  function notifyNestedSubs() {
+  function notifyNestedSubs () {
     listeners.notify()
   }
-
-  function handleChangeWrapper() {
+  // 每次执行 dispatch 都会 触发这个方法 因为下面 subscribe 了
+  // onStateChange 就是 notifyNestedSubs 也就是 notify
+  function handleChangeWrapper () {
     if (subscription.onStateChange) {
       subscription.onStateChange()
     }
