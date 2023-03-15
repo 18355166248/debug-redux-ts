@@ -31,6 +31,7 @@ function Provider<A extends Action = AnyAction, S = unknown>({
   serverState,
 }: ProviderProps<A, S>) {
   const contextValue = useMemo(() => {
+    // 创建监听参数 放入 react 的 context 中
     const subscription = createSubscription(store)
     return {
       store,
@@ -43,10 +44,16 @@ function Provider<A extends Action = AnyAction, S = unknown>({
 
   useIsomorphicLayoutEffect(() => {
     const { subscription } = contextValue
+    // 声明 onStateChange 方法为 notifyNestedSubs 方法
     subscription.onStateChange = subscription.notifyNestedSubs
+    // 初始化 store.subscribe 当执行 strore.dispatch 的时候 会触发 onStateChange( notifyNestedSubs ) 方法
     subscription.trySubscribe()
-
+    console.log(
+      'previousState !== store.getState()',
+      previousState !== store.getState()
+    )
     if (previousState !== store.getState()) {
+      // 触发更新
       subscription.notifyNestedSubs()
     }
     return () => {
@@ -55,7 +62,7 @@ function Provider<A extends Action = AnyAction, S = unknown>({
       subscription.onStateChange = undefined
     }
   }, [contextValue, previousState])
-
+  // 默认使用内部初始化的 context
   const Context = context || ReactReduxContext
 
   // @ts-ignore 'AnyAction' is assignable to the constraint of type 'A', but 'A' could be instantiated with a different subtype

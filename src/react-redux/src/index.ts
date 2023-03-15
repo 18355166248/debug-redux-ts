@@ -14,7 +14,7 @@ import { initializeConnect } from './components/connect'
 console.log('react-redux😘')
 
 initializeUseSelector(useSyncExternalStoreWithSelector)
-initializeConnect(useSyncExternalStore)
+initializeConnect(useSyncExternalStore) // 这个就是 react 的 useSyncExternalStore
 
 // Enable batched updates in our subscriptions for use
 // with standard React renderers (ReactDOM, React Native)

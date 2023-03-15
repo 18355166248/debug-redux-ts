@@ -29,6 +29,7 @@ export function createDispatchHook<
   >(): AppDispatch {
     const store = useStore()
     // @ts-ignore
+    // 所以拿到的就是 redux 生成的 dispatch
     return store.dispatch
   }
 }

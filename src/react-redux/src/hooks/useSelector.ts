@@ -25,6 +25,7 @@ export function createSelectorHook(
   selector: (state: TState) => Selected,
   equalityFn?: EqualityFn<Selected>
 ) => Selected {
+  // 这里拿到了 useContext
   const useReduxContext =
     context === ReactReduxContext
       ? useDefaultReduxContext
@@ -47,9 +48,11 @@ export function createSelectorHook(
         )
       }
     }
-
+    // 这里拿到的 context 上的 value
     const { store, subscription, getServerState } = useReduxContext()!
-
+    // 这里就是 react 自己封装的库 use-sync-external-store 暴露的方法 目的就是为了提供给三方库使用
+    // 作用就是可以拿到最新的 state 因为在react18开始, concurrent 模式是异步的, 可中断的, 所以如果使用useState可能拿到的不是最新的值 这里的底层实现方式也就是将默认的异步更新强制转为同步模式, 所以可能会存在一直执行更新 我感觉这里也是不很优美 会消耗性能
+    // selector 是一个函数 目的就是通过 store.getState() 拿到最新的 state, 然后格式化拿到具体需要的参数
     const selectedState = useSyncExternalStoreWithSelector(
       subscription.addNestedSub,
       store.getState,
